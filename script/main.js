@@ -135,6 +135,38 @@ const getCookieValue = (name) => {
   return "";
 };
 
+const splitFullName = (fullName) => {
+  const parts = String(fullName || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (!parts.length) {
+    return { firstName: "", lastName: "" };
+  }
+  if (parts.length === 1) {
+    return { firstName: parts[0], lastName: "" };
+  }
+  return {
+    firstName: parts[0],
+    lastName: parts.slice(1).join(" "),
+  };
+};
+
+const pushFieldIfValue = (fields, name, value) => {
+  if (!name) {
+    return;
+  }
+  const normalizedName = String(name).trim();
+  if (!normalizedName || normalizedName.startsWith("SEU_")) {
+    return;
+  }
+  const normalizedValue = String(value || "").trim();
+  if (!normalizedValue) {
+    return;
+  }
+  fields.push({ name: normalizedName, value: normalizedValue });
+};
+
 const isHubspotConfigured = (form) => {
   const portalId = form.getAttribute("data-hubspot-portal-id") || "";
   const formId = form.getAttribute("data-hubspot-form-id") || "";
@@ -150,49 +182,88 @@ const isHubspotConfigured = (form) => {
 const submitToHubspot = async (form, payload) => {
   const portalId = form.getAttribute("data-hubspot-portal-id") || "";
   const formId = form.getAttribute("data-hubspot-form-id") || "";
-  const ambienteField = form.getAttribute("data-hubspot-ambiente-field") || "tipo_de_ambiente";
-
-  const fields = [
-    { name: "firstname", value: payload.nome },
-    { name: "email", value: payload.email },
-    { name: "phone", value: payload.telefone },
-    { name: "message", value: payload.mensagem || "" },
-  ];
-
-  if (payload.ambiente) {
-    fields.push({ name: ambienteField, value: payload.ambiente });
-  }
-
-  const requestBody = {
-    fields,
-    context: {
-      hutk: getCookieValue("hubspotutk"),
-      pageUri: window.location.href,
-      pageName: document.title,
-    },
-  };
+  const firstNameField = form.getAttribute("data-hubspot-firstname-field") || "firstname";
+  const lastNameField = form.getAttribute("data-hubspot-lastname-field") || "lastname";
+  const emailField = form.getAttribute("data-hubspot-email-field") || "email";
+  const phoneField = form.getAttribute("data-hubspot-phone-field") || "phone";
+  const messageField = form.getAttribute("data-hubspot-message-field") || "";
+  const ambienteField = form.getAttribute("data-hubspot-ambiente-field") || "";
 
   const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(requestBody),
+  const { firstName, lastName } = splitFullName(payload.nome);
+
+  const fullFields = [];
+  pushFieldIfValue(fullFields, firstNameField, firstName || payload.nome);
+  pushFieldIfValue(fullFields, lastNameField, lastName);
+  pushFieldIfValue(fullFields, emailField, payload.email);
+  pushFieldIfValue(fullFields, phoneField, payload.telefone);
+  pushFieldIfValue(fullFields, messageField, payload.mensagem);
+  pushFieldIfValue(fullFields, ambienteField, payload.ambiente);
+
+  const baseFields = [];
+  pushFieldIfValue(baseFields, firstNameField, firstName || payload.nome);
+  pushFieldIfValue(baseFields, lastNameField, lastName);
+  pushFieldIfValue(baseFields, emailField, payload.email);
+  pushFieldIfValue(baseFields, phoneField, payload.telefone);
+
+  const minimalFields = [];
+  pushFieldIfValue(minimalFields, firstNameField, firstName || payload.nome);
+  pushFieldIfValue(minimalFields, emailField, payload.email);
+
+  const fieldSets = [fullFields, baseFields, minimalFields].filter((set, index, arr) => {
+    if (!set.length) {
+      return false;
+    }
+    return arr.findIndex((candidate) => JSON.stringify(candidate) === JSON.stringify(set)) === index;
   });
 
-  if (!response.ok) {
-    let message = "Nao foi possivel enviar para o HubSpot agora.";
+  let lastErrorMessage = "Nao foi possivel enviar para o HubSpot agora.";
+
+  for (const fields of fieldSets) {
+    const hutk = getCookieValue("hubspotutk");
+    const context = {
+      pageUri: window.location.href,
+      pageName: document.title,
+    };
+
+    if (hutk) {
+      context.hutk = hutk;
+    }
+
+    const requestBody = {
+      fields,
+      context,
+    };
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (response.ok) {
+      return;
+    }
+
     try {
       const errorData = await response.json();
       if (errorData.message) {
-        message = String(errorData.message);
+        lastErrorMessage = String(errorData.message);
       }
     } catch {
-      // Ignore parsing failure and keep default message.
+      lastErrorMessage = "Nao foi possivel enviar para o HubSpot agora.";
     }
-    throw new Error(message);
+
+    if (response.status !== 400) {
+      break;
+    }
   }
+
+  throw new Error(
+    `${lastErrorMessage} Verifique os nomes internos dos campos no HubSpot (data-hubspot-*-field).`
+  );
 };
 
 const leadForms = document.querySelectorAll(".js-lead-form");
