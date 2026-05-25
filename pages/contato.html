@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contato | Atelier Prime</title>
+    <meta
+      name="description"
+      content="Solicite uma proposta da Atelier Prime e receba atendimento exclusivo para seu projeto planejado."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="page-glow" aria-hidden="true"></div>
+    <header class="site-header" id="topo">
+      <div class="container nav-wrap">
+        <a class="brand" href="../index.html" aria-label="Atelier Prime"><span>Atelier</span>Prime</a>
+        <button class="nav-toggle" type="button" aria-label="Abrir menu"><span></span><span></span></button>
+        <nav class="site-nav" aria-label="Principal">
+          <a href="../index.html">Home</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="projetos.html">Projetos</a>
+          <a href="contato.html" class="btn btn-nav">Solicitar proposta</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="inner-hero section-pad reveal" data-delay="0">
+        <div class="container">
+          <p class="eyebrow">Fale com nosso time</p>
+          <h1>Transforme sua ideia em um projeto planejado de alto padrao</h1>
+          <p class="lead">Preencha o formulario e nossa equipe retorna em ate 1 dia util.</p>
+        </div>
+      </section>
+
+      <section class="section-pad">
+        <div class="container contact-grid">
+          <article class="contact-card reveal" data-delay="0">
+            <h3>Atendimento consultivo</h3>
+            <p>Nosso primeiro contato e uma reuniao de briefing para entender rotina e expectativas.</p>
+            <ul class="contact-list">
+              <li>WhatsApp: (11) 98888-8888</li>
+              <li>E-mail: contato@atelierprime.com.br</li>
+              <li>Showroom: Sao Paulo - SP</li>
+            </ul>
+          </article>
+
+          <form
+            class="cta-form contact-form reveal js-lead-form"
+            data-delay="100"
+            action="#"
+            method="post"
+            data-integration-provider="hubspot"
+            data-hubspot-portal-id="51514558"
+            data-hubspot-form-id="e53f6ccd-3f78-4c62-a08c-4e1e00b3b8ab"
+            data-hubspot-ambiente-field="tipo_de_ambiente"
+            data-form-mode="redirect"
+            data-redirect-url="obrigado.html"
+          >
+            <label>
+              Nome completo
+              <input type="text" name="nome" placeholder="Seu nome" required />
+            </label>
+            <label>
+              E-mail
+              <input type="email" name="email" placeholder="voce@email.com" required />
+            </label>
+            <label>
+              Telefone
+              <input type="tel" name="telefone" placeholder="(11) 99999-9999" required />
+            </label>
+            <label>
+              Tipo de ambiente
+              <select name="ambiente" required>
+                <option value="" selected disabled>Selecione</option>
+                <option value="cozinha">Cozinha</option>
+                <option value="closet">Closet</option>
+                <option value="office">Office</option>
+                <option value="outros">Outros</option>
+              </select>
+            </label>
+            <label>
+              Mensagem
+              <textarea name="mensagem" rows="4" placeholder="Conte os detalhes do projeto" required></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit">Enviar solicitacao</button>
+            <p class="form-feedback" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>Atelier Prime © <span id="year"></span>. Todos os direitos reservados.</p>
+        <a href="../index.html">Voltar para home</a>
+      </div>
+    </footer>
+
+    <script src="../script/main.js"></script>
+  </body>
+</html>

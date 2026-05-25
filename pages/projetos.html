@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projetos | Atelier Prime</title>
+    <meta
+      name="description"
+      content="Portifolio de cozinhas, closets e ambientes corporativos planejados pela Atelier Prime."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="page-glow" aria-hidden="true"></div>
+    <header class="site-header" id="topo">
+      <div class="container nav-wrap">
+        <a class="brand" href="../index.html" aria-label="Atelier Prime"><span>Atelier</span>Prime</a>
+        <button class="nav-toggle" type="button" aria-label="Abrir menu"><span></span><span></span></button>
+        <nav class="site-nav" aria-label="Principal">
+          <a href="../index.html">Home</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="projetos.html">Projetos</a>
+          <a href="contato.html" class="btn btn-nav">Solicitar proposta</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="inner-hero section-pad reveal" data-delay="0">
+        <div class="container">
+          <p class="eyebrow">Nosso portifolio</p>
+          <h1>Ambientes planejados com assinatura e acabamento de alto padrao</h1>
+          <p class="lead">Filtre por tipo de ambiente para navegar pelos projetos de referencia.</p>
+        </div>
+      </section>
+
+      <section class="section-pad">
+        <div class="container filter-bar reveal" data-delay="0">
+          <button class="chip is-active" type="button" data-filter="all">Todos</button>
+          <button class="chip" type="button" data-filter="cozinha">Cozinhas</button>
+          <button class="chip" type="button" data-filter="closet">Closets</button>
+          <button class="chip" type="button" data-filter="office">Office</button>
+        </div>
+
+        <div class="container project-catalog" id="catalogo-projetos">
+          <article class="project-card reveal" data-delay="0" data-project-card data-category="cozinha">
+            <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=1200&q=80" alt="Projeto de cozinha planejada" />
+            <div>
+              <h3>Kitchen One</h3>
+              <p>Cozinha com ilha central, laca acetinada e marcenaria em freijo.</p>
+            </div>
+          </article>
+          <article class="project-card reveal" data-delay="70" data-project-card data-category="closet">
+            <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1200&q=80" alt="Projeto de closet de alto padrao" />
+            <div>
+              <h3>Closet Gallery</h3>
+              <p>Closet com vitrine de acessorios, vidro canelado e iluminacao linear.</p>
+            </div>
+          </article>
+          <article class="project-card reveal" data-delay="140" data-project-card data-category="office">
+            <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=1200&q=80" alt="Projeto de home office planejado" />
+            <div>
+              <h3>Executive Desk</h3>
+              <p>Office com biblioteca embutida e painel tecnico para videoconferencia.</p>
+            </div>
+          </article>
+          <article class="project-card reveal" data-delay="210" data-project-card data-category="cozinha">
+            <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80" alt="Projeto de cozinha gourmet" />
+            <div>
+              <h3>Gourmet Curve</h3>
+              <p>Composicao em tons quentes, adega integrada e ferragens ocultas.</p>
+            </div>
+          </article>
+          <article class="project-card reveal" data-delay="280" data-project-card data-category="closet">
+            <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1200&q=80" alt="Projeto de closet com ilha" />
+            <div>
+              <h3>Private Dressing</h3>
+              <p>Closet com ilha central, cabideiros iluminados e espelhos fumme.</p>
+            </div>
+          </article>
+          <article class="project-card reveal" data-delay="350" data-project-card data-category="office">
+            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80" alt="Projeto de office corporativo" />
+            <div>
+              <h3>Boardroom Line</h3>
+              <p>Ambiente corporativo com paineis acusticos e acabamento executivo.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>Atelier Prime © <span id="year"></span>. Todos os direitos reservados.</p>
+        <a href="contato.html">Solicitar proposta</a>
+      </div>
+    </footer>
+
+    <script src="../script/main.js"></script>
+  </body>
+</html>
